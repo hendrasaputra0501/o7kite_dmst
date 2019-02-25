@@ -1,0 +1,45 @@
+<openerp>
+    <data>
+        <record id="seq_type_res_partner_customer" model="ir.sequence.type">
+            <field name="name">Customers Sequence Type</field>
+            <field name="code">res.partner.customer</field>
+        </record>
+        
+        <record id="seq_res_partner_customer" model="ir.sequence">
+            <field name="name">Customers Sequence</field>
+            <field name="code">res.partner.customer</field>
+            <field name="prefix">01-</field>
+            <field name="suffix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_res_partner_supplier" model="ir.sequence.type">
+            <field name="name">Suppliers Sequence Type</field>
+            <field name="code">res.partner.supplier</field>
+        </record>
+        
+        <record id="seq_res_partner_supplier" model="ir.sequence">
+            <field name="name">Suppliers Sequence</field>
+            <field name="code">res.partner.supplier</field>
+            <field name="prefix">02-</field>
+            <field name="suffix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_res_partner_other" model="ir.sequence.type">
+            <field name="name">Others Partner Sequence Type</field>
+            <field name="code">res.partner.other</field>
+        </record>
+        
+        <record id="seq_res_partner_other" model="ir.sequence">
+            <field name="name">Others Partner Sequence</field>
+            <field name="code">res.partner.other</field>
+            <field name="prefix">00-</field>
+            <field name="suffix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</openerp>

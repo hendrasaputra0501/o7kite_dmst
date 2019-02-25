@@ -1,0 +1,17 @@
+<openerp>
+	<data>
+		<record id="view_partner_form_inherit_mdc" model="ir.ui.view">
+			<field name="name">view.partner.form.inherit.mdc</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<field name="parent_id" position="after">
+					<field name="partner_code" placeholder="Partner Code" required="1"/>
+				</field>
+				<field name="user_id" position="after">
+					<field name="default_currency_id" />
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

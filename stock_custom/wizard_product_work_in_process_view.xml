@@ -1,0 +1,33 @@
+<openerp>
+	<data>
+		<record id="beacukai.view_wizard_product_work_in_process" model="ir.ui.view">
+			<field name="name">Laporan Barang Work-in-Process</field>
+			<field name="model">wizard.product.work.in.process</field>
+			<field name="arch" type="xml">
+			   <form string="Laporan Barang Work-in-Process" version="7.0">
+					<group>
+						<group>
+						</group>
+						<group>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="from_date"/>
+						</group>
+						<group>
+							<field name="to_date"/>
+						</group>
+					</group>
+					<footer>
+						<button name="action_open_window" string="View Products WIP" type="object" class="oe_highlight"/>
+						or
+						<button name="export_excel" string="Export to Excel" type="object" />
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+	</data>
+</openerp>

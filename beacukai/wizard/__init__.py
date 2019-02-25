@@ -1,0 +1,5 @@
+import wizard_product_income
+import wizard_product_outgoing
+import wizard_product_mutation
+import wizard_product_work_in_process
+import beacukai_state

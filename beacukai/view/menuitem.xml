@@ -1,0 +1,43 @@
+<openerp>
+	<data>
+		<menuitem id="beacukai_menu" name="BeaCukai" sequence="20" />
+
+		<menuitem id="incoming_beacukai" parent="beacukai_menu" name="Incoming BC Docs" sequence="0" />
+		<menuitem id="outgoing_beacukai" parent="beacukai_menu" name="Outgoing BC Docs" sequence="1" />
+		<menuitem id="beacukai_reports" parent="beacukai_menu" name="Reporting" sequence="2" />
+		<menuitem id="beacukai_traceability" parent="beacukai_menu" name="Traceability" sequence="3" />
+		<menuitem id="beacukai_configuration" parent="beacukai_menu" name="Configuration" sequence="10"/>
+		
+		<menuitem action="action_beacukai_24" id="menu_beacukai_24" parent="outgoing_beacukai" sequence="0" />
+		<!-- <menuitem action="action_beacukai_261" id="menu_beacukai_261" parent="outgoing_beacukai" sequence="1" /> -->
+		<!-- <menuitem action="action_beacukai_27out" id="menu_beacukai_27out" parent="outgoing_beacukai" sequence="2" /> -->
+		<menuitem action="action_beacukai_30" id="menu_beacukai_30" parent="outgoing_beacukai" sequence="3" />
+		<!-- <menuitem action="action_beacukai_41" id="menu_beacukai_41" parent="outgoing_beacukai" sequence="4" /> -->
+		
+		<menuitem action="action_beacukai_20" id="menu_beacukai_20" parent="incoming_beacukai" sequence="0" />
+		<!-- <menuitem action="action_beacukai_23" id="menu_beacukai_23" parent="incoming_beacukai" sequence="1" /> -->
+		<menuitem action="action_beacukai_25" id="menu_beacukai_25" parent="incoming_beacukai" sequence="2" />
+		<!-- <menuitem action="action_beacukai_262" id="menu_beacukai_262" parent="incoming_beacukai" sequence="3" /> -->
+		<!-- <menuitem action="action_beacukai_27in" id="menu_beacukai_27in" parent="incoming_beacukai" sequence="4" /> -->
+		<!-- <menuitem action="action_beacukai_40" id="menu_beacukai_40" parent="incoming_beacukai" sequence="5" /> -->
+
+		<menuitem action="action_wizard_product_income" id="menu_report_beacukai_in" parent="beacukai_reports" sequence="0" />
+		<menuitem action="action_wizard_product_outgoing" id="menu_report_beacukai_out" parent="beacukai_reports" sequence="1" />
+		<menuitem action="action_wizard_product_outgoing_waste" id="menu_report_beacukai_out_waste" parent="beacukai_reports" sequence="2" />
+		<!-- <menuitem action="action_report_beacukai_out" id="menu_report_beacukai_out" parent="beacukai_reports" sequence="1" /> -->
+		<menuitem action="action_wizard_product_mutation" id="stock_mutation_reports" parent="beacukai_reports" sequence="3" />
+		<!-- <menuitem action="action_wizard_product_work_in_process" id="stock_wip_reports" parent="beacukai_reports" sequence="3" /> -->
+
+		<!-- <menuitem action="action_beacukai_document_line" id="menu_beacukai_document_line" parent="beacukai_traceability" sequence="0" />
+		<menuitem action="action_beacukai_rm_moves" id="menu_beacukai_rm_mooves" parent="beacukai_traceability" sequence="1" /> -->
+
+		<menuitem id="menu_beacukai_partner" parent="beacukai_configuration" sequence="0" name="Partners" />
+		<menuitem action="base.action_partner_customer_form" id="beacukai_customers" parent="menu_beacukai_partner" sequence="1" />
+		<menuitem action="base.action_partner_supplier_form" id="beacukai_suppliers" parent="menu_beacukai_partner" sequence="2" />
+		
+		<menuitem id="menu_beacukai_product" parent="beacukai_configuration" sequence="1" name="Products" />
+		<menuitem action="product.product_normal_action_sell" id="beacukai_products" parent="menu_beacukai_product" sequence="0" />
+		<menuitem action="master_data_custom.action_product_rm_category" id="beacukai_product_rm" parent="menu_beacukai_product" sequence="1" />
+		<menuitem action="master_data_custom.action_product_blend" id="beacukai_product_blend" parent="menu_beacukai_product" sequence="2" />
+	</data>
+</openerp>

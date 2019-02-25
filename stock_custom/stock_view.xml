@@ -1,0 +1,674 @@
+<openerp>
+	<data>
+		<record id="view_picking_form_inhrt_custom" model="ir.ui.view">
+			<field name="name">stock.picking.form.inhrt.custom</field>
+			<field name="model">stock.picking</field>
+			<field name="priority" eval="32"/>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+				<button name="%(stock.action_stock_invoice_onshipping)d" position="after">
+					<button name="action_revert_done" string="Reopen" states="done,cancel" type="object" icon="gtk-cancel" confirm="Are you sure you want to reopen this stock picking?"/>
+				</button>
+				<field name="stock_journal_id" position="after">
+					<field name="product_type" attrs="{'invisible':[('type','!=','internal')]}" required="1"/>
+				</field>
+				<xpath expr="/form/sheet/notebook/page[@string='Additional Info']/group" position="before">
+					<group>
+						<group>
+							<label for="default_location_id"/>
+							<div>
+								<field name="default_location_id" domain="[('usage','!=','view')]"/>
+								<button name="set_default_location" states="draft"
+										string="(set location)" class="oe_link oe_edit_only"
+										type="object" help="Set all detail products location"/>
+							</div>
+							<label for="default_dest_location_id"/>
+							<div>
+								<field name="default_dest_location_id" domain="[('usage','!=','view')]"/>
+								<button name="set_default_location" states="draft"
+										string="(set location)" class="oe_link oe_edit_only"
+										type="object" help="Set all detail products location"/>
+							</div>
+						</group>
+						<group>
+						</group>
+					</group>
+				</xpath>
+				<field name='move_lines' position='attributes'>
+					<attribute name='context'>{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'picking_type': 'internal', 'product_type': product_type}</attribute>
+				</field>
+				<field name='date_done' position='after'>
+					<field name='date_done_2' on_change='onchange_date_done_2(date_done_2)'/>
+				</field>
+				<field name='date_done' position='attributes'>
+					<attribute name='invisible'>1</attribute>
+				</field>
+			</field>
+		</record>
+
+		<record id="stock_picking_out_form_inhrt_custom" model="ir.ui.view">
+            <field name="name">stock.picking.out.form.inhrt.custom</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.act_stock_return_picking)d" position="after">
+                    <button name="action_revert_done" string="Reopen" states="done,cancel" type="object" icon="gtk-cancel" confirm="Are you sure you want to reopen this stock picking?"/>
+                </button>
+                <field name="stock_journal_id" position="after">
+					<field name="product_type" attrs="{'invisible':[('type','!=','internal')]}" required="1"/>
+				</field>
+                <field name='move_lines' position='attributes'>
+					<attribute name='context'>{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'picking_type': 'internal', 'product_type': product_type}</attribute>
+				</field>
+                <field name='date_done' position='after'>
+					<field name='date_done_2' on_change='onchange_date_done_2(date_done_2)'/>
+				</field>
+				<field name='date_done' position='attributes'>
+					<attribute name='invisible'>1</attribute>
+				</field>
+            </field>
+		</record>
+
+        <record id="stock_picking_in_form_inhrt_custom" model="ir.ui.view">
+            <field name="name">stock.picking.in.form.inhrt.custom</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.act_stock_return_picking)d" position="after">
+                    <button name="action_revert_done" string="Reopen" states="done,cancel" type="object" icon="gtk-cancel" confirm="Are you sure you want to reopen this stock picking?"/>
+                </button>
+                <field name="stock_journal_id" position="after">
+					<field name="product_type" attrs="{'invisible':[('type','!=','internal')]}" required="1"/>
+				</field>
+                <field name='move_lines' position='attributes'>
+					<attribute name='context'>{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'picking_type': 'internal', 'product_type': product_type}</attribute>
+				</field>
+                <field name='date_done' position='after'>
+					<field name='date_done_2' on_change='onchange_date_done_2(date_done_2)'/>
+				</field>
+				<field name='date_done' position='attributes'>
+					<attribute name='invisible'>1</attribute>
+				</field>
+            </field>
+		</record>
+
+		<record id="view_move_picking_form_custom_1" model="ir.ui.view">
+			<field name="name">view.move.picking.form.custom_1</field>
+			<field name="model">stock.move</field>
+			<field name="inherit_id" ref="stock.view_move_picking_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="/form/group/group/div/button[@string='Scrap']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<field name="product_id" position="before">
+					<field name="product_type" />
+				</field>
+				<field name="product_id" position="attributes">
+					<attribute name="domain">[('categ_id.product_type','=',product_type)]</attribute>
+				</field>					
+				<field name="location_dest_id" position="attributes">
+					<attribute name="domain">[('usage','!=','view')]</attribute>
+				</field>
+			</field>
+		</record>
+
+		<!-- model : stock.production.move -->
+		<record id="view_prod_move_stock_move_form" model="ir.ui.view">
+			<field name="name">view.prod.move.stock.move.form</field>
+			<field name="model">production.move</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Production Move">
+				<sheet>
+					<group>
+						<group>
+							<!-- <field name="product_type" invisible="1" /> -->
+							<!-- <field name="blend_id" attrs="{'invisible':[('product_type','=','raw_material')],'required':[('product_type','=','finish_good')]}" on_change="onchange_product_id(product_type, blend_id, raw_material_categ_id)"/> -->
+							<field name="raw_material_categ_id" required="1" on_change="onchange_product_id(raw_material_categ_id)"/>
+							<field name="name" />
+							<label for="product_qty"/>
+							<div>
+								<field name="product_qty" />
+								<field name="product_uom" placeholder="Unit of Measure"/>
+							</div>
+						</group>
+						<group>
+							<field name="state" invisible="1"/>
+							<field name="date_done" attrs="{'invisible':[('state','=','draft')]}"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="location_id" />
+						</group>
+						<group>
+							<field name="location_dest_id" />
+						</group>
+					</group>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_prod_move_form" model="ir.ui.view">
+			<field name="name">view.prod.move.form</field>
+			<field name="model">production.move</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Production Mov">
+				<header>
+					<button name="action_done" type="object" states="draft" string="Confirm"/>
+					<button name="action_cancel" type="object" states="draft,done" string="Cancel"/>
+					<button name="action_set_draft" type="object" states="cancel" string="Set to Draft"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,done" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<!-- <field name="product_type" /> -->
+							<!-- <field name="blend_id" attrs="{'invisible':[('product_type','=','raw_material')],'required':[('product_type','=','finish_good')]}" on_change="onchange_product_id(product_type, blend_id, raw_material_categ_id)"/> -->
+							<field name="raw_material_categ_id" required="1" on_change="onchange_product_id(raw_material_categ_id)"/>
+							<field name="name" />
+							<label for="product_qty"/>
+							<div>
+								<field name="product_qty" />
+								<field name="product_uom" placeholder="Unit of Measure"/>
+							</div>
+						</group>
+						<group>
+							<field name="move_id" />
+							<field name="date_done" attrs="{'invisible':[('state','=','draft')]}"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="location_id" />
+						</group>
+						<group>
+							<field name="location_dest_id" />
+						</group>
+					</group>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_prod_move_tree" model="ir.ui.view">
+			<field name="name">view.prod.move.tree</field>
+			<field name="model">production.move</field>
+			<field name="arch" type="xml">
+				<tree string="Stock Production Move" colors="blue:state == 'draft';black:state == 'done'">
+					<!-- <field name="product_type" /> -->
+					<!-- <field name="blend_id" attrs="{'invisible':[('product_type','=','raw_material')],'required':[('product_type','=','finish_good')]}"/> -->
+					<field name="raw_material_categ_id" required="1"/>
+					<field name="product_uom" />
+					<field name="product_qty" />
+					<field name="location_id" />
+					<field name="location_dest_id" />
+					<field name="date_done" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_prod_move" model="ir.actions.act_window">
+			<field name="name">Stock Production Moves</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">production.move</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="search_view_id" ref="view_stock_picking_custom_search" /> -->
+		</record>
+
+		<record id="action_prod_move_form" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_prod_move_tree"/>
+			<field name="act_window_id" ref="action_prod_move"/>
+		</record>
+
+		<record id="action_prod_move_tree" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_prod_move_form"/>
+			<field name="act_window_id" ref="action_prod_move"/>
+		</record>
+
+		<!-- model : stock.move -->
+		<record id="view_move_picking_custom_form" model="ir.ui.view">
+			<field name="name">view.move.picking.custom.form</field>
+			<field name="model">stock.move.custom</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Move Custom">
+				<sheet>
+					<group>
+						<group>
+							<field name="shipment_type" invisible="1"/>
+							<field name="product_type" invisible="1" />
+							<field name="blend_id" attrs="{'invisible':[('product_type','=','raw_material')],'required':[('product_type','=','finish_good')]}" on_change="onchange_product_id(product_type, blend_id, raw_material_categ_id)"/>
+							<field name="raw_material_categ_id" attrs="{'invisible':[('product_type','=','finish_good')],'required':[('product_type','=','raw_material')]}" on_change="onchange_product_id(product_type, blend_id, raw_material_categ_id)"/>
+							<field name="name" />
+							<label for="product_qty"/>
+							<div>
+								<field name="product_qty" />
+								<field name="product_uom" placeholder="Unit of Measure"/>
+							</div>
+						</group>
+						<group>
+							<field name="state" invisible="1"/>
+							<field name="date_done" attrs="{'invisible':[('state','=','draft')]}"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="location_id" />
+						</group>
+						<group>
+							<field name="location_dest_id" />
+						</group>
+					</group>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_move_custom_form" model="ir.ui.view">
+			<field name="name">view.move.picking.form</field>
+			<field name="model">stock.move.custom</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Move Custom">
+				<header>
+					<field name="state" widget="statusbar" statusbar_visible="draft,done" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="shipment_type" invisible="1"/>
+							<field name="product_type" />
+							<field name="blend_id" attrs="{'invisible':[('product_type','=','raw_material')],'required':[('product_type','=','finish_good')]}" on_change="onchange_product_id(product_type, blend_id, raw_material_categ_id)"/>
+							<field name="raw_material_categ_id" attrs="{'invisible':[('product_type','=','finish_good')],'required':[('product_type','=','raw_material')]}" on_change="onchange_product_id(product_type, blend_id, raw_material_categ_id)"/>
+							<field name="name" />
+							<label for="product_qty"/>
+							<div>
+								<field name="product_qty" />
+								<field name="product_uom" placeholder="Unit of Measure"/>
+							</div>
+						</group>
+						<group>
+							<field name="date_done" attrs="{'invisible':[('state','=','draft')]}"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="location_id" />
+						</group>
+						<group>
+							<field name="location_dest_id" />
+						</group>
+					</group>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_move_custom_tree" model="ir.ui.view">
+			<field name="name">view.move.custom.tree</field>
+			<field name="model">stock.move.custom</field>
+			<field name="arch" type="xml">
+				<tree string="Stock Move Custom" colors="blue:state == 'draft';black:state == 'done'">
+					<!-- <field name="shipment_type" /> -->
+					<field name="product_type" />
+					<field name="blend_id" attrs="{'invisible':[('product_type','=','raw_material')],'required':[('product_type','=','finish_good')]}"/>
+					<field name="raw_material_categ_id" attrs="{'invisible':[('product_type','=','finish_good')],'required':[('product_type','=','raw_material')]}"/>
+					<field name="product_uom" />
+					<field name="product_qty" />
+					<!-- <field name="name" /> -->
+					<field name="location_id" />
+					<field name="location_dest_id" />
+					<field name="date_done" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_move_custom" model="ir.actions.act_window">
+			<field name="name">Custom Stock Moves</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.move.custom</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="search_view_id" ref="view_stock_picking_custom_search" /> -->
+		</record>
+
+		<record id="action_move_custom_form" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_move_custom_tree"/>
+			<field name="act_window_id" ref="action_move_custom"/>
+		</record>
+
+		<record id="action_move_custom_tree" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence"/>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_move_custom_form"/>
+			<field name="act_window_id" ref="action_move_custom"/>
+		</record>
+
+		<!-- model : stock.picking.custom -->
+		<record id="view_stock_picking_custom_search" model="ir.ui.view">
+			<field name="name">stock.picking.custom.search</field>
+			<field name="model">stock.picking.custom</field>
+			<field name="arch" type="xml">
+				<search string="Stock Picking">
+					<filter name="state" string="Valid BC" icon="terp-accessories-archiver" domain="[('state','=','done')]"/>
+					<!-- <field name="name" string="Search" filter_domain="['|',('name','ilike', self),('ref','ilike',self)]"/> -->
+					<!-- <field name="invoice_related_id" string="Invoice" filter_domain="[('invoice_related_id','ilike',self)]"/> -->
+					<!-- <field name="loan_type_id" string="Others Loan" filter_domain="[('loan_type_id','ilike',self)]"/> -->
+					<!-- <field name="partner_id" string="Applicant" filter_domain="[('partner_id','child_of',self)]"/> -->
+					<group expand="0" string="Group By...">
+						<filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+						<!-- <filter name="nego_loan" string="Invoice Negotiation" icon="terp-accessories-archiver" domain="[('loan_type','=','nego')]"/> -->
+						<!-- <filter name="tr_loan" string="Transfer Receipt" icon="terp-accessories-archiver" domain="[('loan_type','=','tr')]"/> -->
+						<!-- <filter name="other_loan" string="Other Loan" icon="terp-accessories-archiver" domain="[('loan_type','=','others')]"/> -->
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_stock_picking_custom_form" model="ir.ui.view">
+			<field name="name">view.stock.picking.custom.form</field>
+			<field name="model">stock.picking.custom</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Picking">
+				<header>
+					<button name="action_done" type="object" states="draft" string="Confirm"/>
+					<button name="action_cancel" type="object" states="draft,done" string="Cancel"/>
+					<button name="action_set_draft" type="object" states="cancel" string="Set to Draft"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,done" />
+				</header>
+				<sheet>
+					<h1>
+						<field name="name" class="oe_inline"/>
+					</h1>
+					<group>
+						<group>
+							<field name="shipment_type" invisible="1"/>
+							<field name="product_type" />
+						</group>
+						<group>
+							<field name="create_date" />
+							<field name="date_done" required="1"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Products">
+							<field name="move_lines" string="Stock Move Custom" context="{'form_view_ref':'stock_custom.view_move_picking_custom_form', 'tree_view_ref':'stock_custom.view_move_custom_tree', 'shipment_type': shipment_type, 'product_type': product_type}" options="{&quot;reload_on_button&quot;: true}"/>
+						</page>
+					</notebook>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_stock_picking_custom_tree" model="ir.ui.view">
+			<field name="name">view.stock.picking.custom.tree</field>
+			<field name="model">stock.picking.custom</field>
+			<field name="arch" type="xml">
+				<tree string="Stock Picking">
+					<field name="name" />
+					<field name="product_type" />
+					<field name="create_date" />
+					<field name="date_done" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<!--  ACTION  -->
+		<record id="action_stock_picking_custom" model="ir.actions.act_window">
+			<field name="name">Internal Transfer</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking.custom</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('shipment_type','=','internal')]</field>
+			<field name="context">{'shipment_type':'internal'}</field>
+			<field name="search_view_id" ref="view_stock_picking_custom_search" />
+		</record>
+		<record id="action_stock_picking_custom_in" model="ir.actions.act_window">
+			<field name="name">Incoming Shipments</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking.custom</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('shipment_type','=','in')]</field>
+			<field name="context">{'shipment_type':'in','product_type':'raw_material'}</field>
+			<field name="search_view_id" ref="view_stock_picking_custom_search" />
+		</record>
+		<record id="action_stock_picking_custom_out" model="ir.actions.act_window">
+			<field name="name">Delivery Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking.custom</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('shipment_type','=','out')]</field>
+			<field name="context">{'shipment_type':'out','product_type':'finish_good'}</field>
+			<field name="search_view_id" ref="view_stock_picking_custom_search" />
+		</record>
+
+		<!-- model : stock.production.summary -->
+		<!-- Stock Production -->
+		<record id="stock_production_summary_form" model="ir.ui.view">
+			<field name="name">stock.production.summary.form</field>
+			<field name="model">stock.production.summary</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Production Summary">
+				<header>
+					<button name="action_confirm" type="object" states="draft" string="Confirm"/>
+					<button name="action_confirm2" type="object" states="confirmed" string="Compute Consumed Products"/>
+					<button name="action_done" type="object" states="confirmed2" string="Validate Stock"/>
+					<button name="action_cancel" type="object" states="draft,confirmed,confirmed2,posted" string="Cancel"/>
+					<button name="action_set_draft" type="object" states="cancelled" string="Set to Draft"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,posted" />
+				</header>
+				<sheet>
+					<h1>
+						<field name="name" class="oe_inline"/>
+					</h1>
+					<group>
+						<group>
+							<field name="start_date" required="1"/>
+							<field name="end_date" required="1"/>
+						</group>
+						<group>
+							<field name="create_date" />
+						</group>
+					</group>
+					<notebook>
+						<page string="Products">
+							<group string="Finished Products">
+								<field name="move_produce_ids" nolabel="1">
+									<form version="7.0" string="Finished Product Data">
+										<group>
+											<group string="Product">
+												<field name="blend_id" readonly="1" />
+												<label for="est_production_qty"/>
+												<div>
+													<field name="est_production_qty" on_change="onchange_est_production_qty(blend_id, product_uom, est_production_qty, ratio_produced_qty, previous_qty, incoming_qty, outgoing_qty)"/>
+													<field name="product_uom" readonly="1" />
+												</div>
+												<field name="ratio_produced_qty" on_change="onchange_est_production_qty(blend_id, product_uom, est_production_qty, ratio_produced_qty, previous_qty, incoming_qty, outgoing_qty)"/>
+											</group>
+											<group string="Expected Stock">
+												<field name="previous_qty" readonly="1" />
+												<field name="produced_qty" readonly="0"/>
+												<field name="waste_qty" readonly="0"/>
+												<field name="incoming_qty" readonly="1" />
+												<field name="outgoing_qty" readonly="1" />
+												<field name="closing_qty" readonly="0" />
+											</group>
+										</group>
+										<group string="Consumed Products">
+											<field name="consumed_products" nolabel="1">
+												<tree string="Consumed Products" editable="bottom">
+													<field name="raw_material_categ_id" />
+													<field name="issued_qty" />
+													<field name="consumed_qty" />
+													<field name="waste_qty" />
+												</tree>
+											</field>
+										</group>
+									</form>
+									<tree string="Finished Products">
+										<field name="blend_id" />
+										<field name="product_uom" />
+										<field name="est_production_qty" />
+										<field name="produced_qty" />
+										<field name="waste_qty" />
+										<field name="previous_qty" />
+										<field name="incoming_qty" />
+										<field name="outgoing_qty" />
+										<field name="closing_qty" />
+									</tree>
+								</field>
+							</group>
+							<group string="Summary Consumed Products">
+								<field name="move_consume_ids" nolabel="1">
+									<tree string="Finished Products" create="false" editable="bottom">
+										<field name="raw_material_categ_id" />
+										<field name="product_uom" />
+										<field name="issued_qty" />
+										<!-- <field name="previous_qty" />
+										<field name="incoming_qty" />
+										<field name="outgoing_qty" />
+										<field name="closing_qty" /> -->
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Posted Inventory">
+							<field name="move_lines" string="Stock Move Custom" context="{'tree_view_ref':'stock_custom.view_move_custom_tree'}"/>
+						</page>
+					</notebook>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="stock_production_summary_tree" model="ir.ui.view">
+			<field name="name">stock.production.summary.tree</field>
+			<field name="model">stock.production.summary</field>
+			<field name="arch" type="xml">
+				<tree string="Stock Production Summary">
+					<field name="name" />
+					<field name="create_date" />
+					<field name="start_date" />
+					<field name="end_date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_stock_production_summary" model="ir.actions.act_window">
+			<field name="name">Stock Production Summaries</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.production.summary</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="search_view_id" ref="view_stock_picking_custom_search" /> -->
+		</record>
+
+		<!-- model : stock.inventory.custom -->
+		<!-- Stock Inventory -->
+		<record id="stock_inventory_custom_form" model="ir.ui.view">
+			<field name="name">stock.inventory.custom.form</field>
+			<field name="model">stock.inventory.custom</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Stock Inventory">
+				<header>
+					<button name="action_confirm" type="object" states="draft" string="Confirm Adjustment"/>
+					<button name="action_done" type="object" states="confirm" string="Validate Adjustment"/>
+					<button name="action_cancel" type="object" states="confirm,done" string="Cancel Adjustment"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,done" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" placeholder="e.g. Opening Inventory"/>
+							<field name="product_type" />
+						</group>
+						<group>
+							<field name="date" />
+						</group>
+					</group>
+					<notebook>
+						<page string="General Information">
+							<group attrs="{'invisible':[('product_type','=','raw_material')]}">
+								<field name="fg_inventory_line_ids" nolabel="1">
+									<tree string="Finish Good Products" editable="bottom">
+										<field name="location_id" />
+										<field name="raw_material_categ_id" invisible="1"/>
+										<field name="blend_id" on_change="onchange_product_id(blend_id, raw_material_categ_id)"/>
+										<field name="product_qty" />
+										<field name="product_uom" />
+									</tree>
+								</field>
+							</group>
+							<group attrs="{'invisible':[('product_type','=','finish_good')]}">
+								<field name="rm_inventory_line_ids" nolabel="1">
+									<tree string="Raw Matetrial Products" editable="bottom">
+										<field name="location_id" />
+										<field name="blend_id" invisible="1"/>
+										<field name="raw_material_categ_id" on_change="onchange_product_id(blend_id, raw_material_categ_id)"/>
+										<field name="product_qty" />
+										<field name="product_uom" />
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Posted Inventory">
+							<field name="move_lines" string="Stock Move Custom" context="{'tree_view_ref':'stock_custom.view_move_custom_tree'}"/>
+						</page>
+					</notebook>
+				</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="stock_inventory_custom_tree" model="ir.ui.view">
+			<field name="name">stock.inventory.custom.tree</field>
+			<field name="model">stock.inventory.custom</field>
+			<field name="arch" type="xml">
+				<tree string="Stock Inventory">
+					<field name="name" />
+					<field name="product_type" />
+					<field name="date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_stock_inventory_custom" model="ir.actions.act_window">
+			<field name="name">Adjustment Inventories</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.inventory.custom</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="search_view_id" ref="view_stock_picking_custom_search" /> -->
+		</record>
+
+		<!-- menuitem -->
+		<!-- <menuitem id="picking_custom" parent="beacukai.beacukai_menu" name="Incoming/Delivery" sequence="4"/>
+		<menuitem action="action_stock_picking_custom_in" id="picking_in" parent="picking_custom" name="Incoming Shipments" sequence="0"/>
+		<menuitem action="action_stock_picking_custom_out" id="picking_out" parent="picking_custom" name="Deliverey Orders" sequence="1"/>
+		<menuitem action="action_stock_picking_custom" id="picking" parent="picking_custom" name="Internal Transfers" sequence="2"/> -->
+
+		<menuitem id="stock_production" parent="beacukai.beacukai_menu" name="Production" sequence="4"/>
+		<!-- <menuitem action="action_stock_production_summary" id="menu_stock_production_summary" parent="stock_production" sequence="0"/> -->
+		<menuitem action="action_prod_move" id="menu_prod_move" parent="stock_production" sequence="1"/>
+
+		<!-- <menuitem id="stock_control" parent="beacukai.beacukai_menu" name="Inventory Control" sequence="5"/>
+		<menuitem action="action_stock_inventory_custom" id="menu_stock_inventory_custom" parent="stock_control" sequence="0"/> -->
+
+		<!-- <menuitem id="stock_custom_traceability" parent="beacukai.beacukai_menu" name="Traceability" sequence="5"/>
+		<menuitem action="action_move_custom" id="menu_move_custom" parent="stock_custom_traceability" sequence="0"/> -->
+	</data>
+</openerp>

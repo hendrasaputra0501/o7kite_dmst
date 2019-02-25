@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report auto="False" id="report_blend_mutation" model="product.blend" name="blend.mutation.report.xls" string="Mutasi Blend" usage="default" report_type="xls" menu="False" header="False"/>
+		<report auto="False" id="report_blend_wip" model="product.blend" name="blend.wip.report.xls" string="WIP Blend" usage="default" report_type="xls" menu="False" header="False"/>
+		<report auto="False" id="report_rm_categ_mutation" model="product.rm.category" name="rm.categ.mutation.report.xls" string="Mutasi Bahan Baku" usage="default" report_type="xls" menu="False" header="False" />
+		<report auto="False" id="report_rm_categ_wip" model="product.rm.category" name="rm.categ.wip.report.xls" string="WIP Bahan Baku" usage="default" report_type="xls" menu="False" header="False" />
+		<report auto="False" id="report_product_mutation" model="product.product" name="product.mutation.report.xls" string="Mutasi Product" usage="default" report_type="xls" menu="False" header="False" />
+
+		<report auto="False" id="report_stock_rm_issue" model="stock.move" name="stock.rm.issue.xls" string="Laporan Pemakaian Bahan Baku" usage="default" report_type="xls" menu="True" header="False" />
+		<report auto="False" id="report_stock_fg_receipt" model="stock.move" name="stock.fg.receipt.xls" string="Laporan Pemasukan Bahan Baku" usage="default" report_type="xls" menu="True" header="False" />
+	</data>
+</openerp>

@@ -1,0 +1,221 @@
+<openerp>
+	<data>
+		<record id="view_beacukai_document_search" model="ir.ui.view">
+			<field name="name">beacukai.document.search</field>
+			<field name="model">beacukai.document</field>
+			<field name="arch" type="xml">
+				<search string="Beacukai Document">
+					<filter name="state" string="Valid BC" icon="terp-accessories-archiver" domain="[('state','=','validated')]"/>
+					<!-- <field name="name" string="Search" filter_domain="['|',('name','ilike', self),('ref','ilike',self)]"/> -->
+					<!-- <field name="invoice_related_id" string="Invoice" filter_domain="[('invoice_related_id','ilike',self)]"/> -->
+					<!-- <field name="loan_type_id" string="Others Loan" filter_domain="[('loan_type_id','ilike',self)]"/> -->
+					<!-- <field name="partner_id" string="Applicant" filter_domain="[('partner_id','child_of',self)]"/> -->
+					<group expand="0" string="Group By...">
+						<filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+						<!-- <filter name="nego_loan" string="Invoice Negotiation" icon="terp-accessories-archiver" domain="[('loan_type','=','nego')]"/> -->
+						<!-- <filter name="tr_loan" string="Transfer Receipt" icon="terp-accessories-archiver" domain="[('loan_type','=','tr')]"/> -->
+						<!-- <filter name="other_loan" string="Other Loan" icon="terp-accessories-archiver" domain="[('loan_type','=','others')]"/> -->
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_beacukai_document_form" model="ir.ui.view">
+			<field name="name">view.beacukai.document.form</field>
+			<field name="model">beacukai.document</field>
+			<field name="arch" type="xml">
+				<form version="7.0" string="Beacukai Document">
+				<header>
+					<button name="action_done" type="object" states="draft" string="Validate"/>
+					<button name="action_cancel" type="object" states="draft,validated" string="Cancel"/>
+					<button name="action_set_draft" type="object" states="cancelled" string="Set to Draft"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,validated" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="shipment_type" invisible="1"/>
+							<field name="document_type" readonly="1"/>
+							<field name="picking_no" />
+							<field name="picking_date" />
+							<field name="peb_number" attrs="{'invisible':[('shipment_type','=','in'),('document_type','!=','30')]}"/>
+							<field name="peb_date" attrs="{'invisible':[('shipment_type','=','in'),('document_type','!=','30')]}"/>
+							<field name="currency_id" />
+						</group>
+						<group>
+							<field name="registration_no" />
+							<field name="registration_date" />
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="source_partner_id" attrs="{'readonly':[('shipment_type','=','out')]}" on_change="onchange_partner_id(shipment_type,source_partner_id,dest_partner_id)"/>
+							<field name="source_partner_address" attrs="{'readonly':[('shipment_type','=','out')]}" />
+						</group>
+						<group>
+							<field name="dest_partner_id" attrs="{'readonly':[('shipment_type','=','in')]}" on_change="onchange_partner_id(shipment_type,source_partner_id,dest_partner_id)"/>
+							<field name="dest_partner_address" attrs="{'readonly':[('shipment_type','=','in')]}" />
+						</group>
+					</group>
+					<notebook>
+						<page string="Products">
+							<field name="product_lines">
+								<tree string="Products" editable="bottom">
+									<field name="product_id" on_change="onchange_product_id(product_id)"/>
+									<field name="name" />
+									<field name="product_qty" on_change="onchange_price_subtotal(product_id, price_subtotal, product_qty, line_tax_ids, context)"/>
+									<field name="product_uom" />
+									<field name="price_unit" />
+									<field name="line_tax_ids" widget="many2many_tags" on_change="onchange_price_subtotal(product_id, price_subtotal, product_qty, line_tax_ids, context)"/>
+									<field name="price_subtotal" on_change="onchange_price_subtotal(product_id, price_subtotal, product_qty, line_tax_ids, context)"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_beacukai_document_tree" model="ir.ui.view">
+			<field name="name">view.beacukai.document.tree</field>
+			<field name="model">beacukai.document</field>
+			<field name="arch" type="xml">
+				<tree string="Beacukai Document">
+					<field name="document_type" />
+					<field name="registration_no" />
+					<field name="registration_date" />
+					<field name="picking_no" />
+					<field name="picking_date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<!--  ACTION  -->
+		<record id="action_beacukai_20" model="ir.actions.act_window">
+			<field name="name">BC 2.0</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','20')]</field>
+			<field name="context">{'shipment_type':'in','document_type':'20'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_23" model="ir.actions.act_window">
+			<field name="name">BC 2.3</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','23')]</field>
+			<field name="context">{'shipment_type':'in','document_type':'23'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_25" model="ir.actions.act_window">
+			<field name="name">BC 2.5</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','25')]</field>
+			<field name="context">{'shipment_type':'in','document_type':'25'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_262" model="ir.actions.act_window">
+			<field name="name">BC 2.62</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','262')]</field>
+			<field name="context">{'shipment_type':'in','document_type':'262'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_27in" model="ir.actions.act_window">
+			<field name="name">BC 2.7 Masukan</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','27in')]</field>
+			<field name="context">{'shipment_type':'in','document_type':'27in'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_40" model="ir.actions.act_window">
+			<field name="name">BC 4.0</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','40')]</field>
+			<field name="context">{'shipment_type':'in','document_type':'40'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_24" model="ir.actions.act_window">
+			<field name="name">BC 2.4</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','24')]</field>
+			<field name="context">{'shipment_type':'out','document_type':'24'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_261" model="ir.actions.act_window">
+			<field name="name">BC 2.61</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','261')]</field>
+			<field name="context">{'shipment_type':'out','document_type':'261'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_27out" model="ir.actions.act_window">
+			<field name="name">BC 2.7 Keluaran</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','27out')]</field>
+			<field name="context">{'shipment_type':'out','document_type':'27out'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_30" model="ir.actions.act_window">
+			<field name="name">BC 3.0</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','30')]</field>
+			<field name="context">{'shipment_type':'out','document_type':'30'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+
+		<record id="action_beacukai_41" model="ir.actions.act_window">
+			<field name="name">BC 4.1</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">beacukai.document</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('document_type','=','41')]</field>
+			<field name="context">{'shipment_type':'out','document_type':'41'}</field>
+			<field name="search_view_id" ref="view_beacukai_document_search" />
+		</record>
+	</data>
+</openerp>

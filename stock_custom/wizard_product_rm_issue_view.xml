@@ -1,0 +1,45 @@
+<openerp>
+	<data>
+		<record id="view_wizard_rm_issue" model="ir.ui.view">
+			<field name="name">Laporan Pemakaian Bahan Baku</field>
+			<field name="model">wizard.product.rm.issue</field>
+			<field name="arch" type="xml">
+			   <form string="Laporan Pemakaian Bahan Baku" version="7.0">
+					<group>
+						<group>
+							<!-- <field name="product_type" required="1"/> -->
+						</group>
+						<group>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="from_date"/>
+						</group>
+						<group>
+							<field name="to_date"/>
+						</group>
+					</group>
+					<footer>
+						<!-- <button name="action_open_window" string="View Products Inventory" type="object" class="oe_highlight"/> -->
+						<button name="export_excel" string="Export to Excel" type="object" />
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_wizard_product_rm_issue" model="ir.actions.act_window">
+			<field name="name">Lap. Pemakaian Bahan Baku</field>
+			<field name="res_model">wizard.product.rm.issue</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<!-- <field name="context">{'product_type':'raw_material','shipment_type':'in'}</field> -->
+			<field name="view_id" ref="view_wizard_rm_issue"/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="action_wizard_product_rm_issue" id="stock_rm_issue" parent="beacukai.beacukai_reports" sequence="3" />
+	</data>
+</openerp>

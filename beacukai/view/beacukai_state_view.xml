@@ -1,0 +1,73 @@
+<openerp>
+	<data>
+		<record id="baecukai_confirm_view" model="ir.ui.view">
+			<field name="name">beacukai.confirm.form</field>
+			<field name="model">beacukai.confirm</field>
+			<field name="arch" type="xml">
+				<form string="Validate Draft Beacukai Document" version="7.0">
+					<p class="oe_grey">
+						Once draft BC are confirmed, you will not be able
+						to modify them
+					</p>
+					<footer>
+						<button string="Validate BC" name="beacukai_confirm" type="object" default_focus="1" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_beacukai_confirm"
+			multi="True"
+			key2="client_action_multi" name="Validate Draft BC"
+			res_model="beacukai.confirm" src_model="beacukai.document"
+			view_mode="form" target="new" view_type="form" />
+
+		<record id="baecukai_cancel_view" model="ir.ui.view">
+			<field name="name">beacukai.cancel.form</field>
+			<field name="model">beacukai.cancel</field>
+			<field name="arch" type="xml">
+				<form string="Cancel Beacukai Document" version="7.0">
+					<p class="oe_grey">
+					</p>
+					<footer>
+						<button string="Cancel BC" name="beacukai_cancel" type="object" default_focus="1" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_beacukai_cancel"
+			multi="True"
+			key2="client_action_multi" name="Cancel BC"
+			res_model="beacukai.cancel" src_model="beacukai.document"
+			view_mode="form" target="new" view_type="form" />
+
+		<record id="baecukai_draft_view" model="ir.ui.view">
+			<field name="name">beacukai.draft.form</field>
+			<field name="model">beacukai.draft</field>
+			<field name="arch" type="xml">
+				<form string="Set to Draft BC" version="7.0">
+					<p class="oe_grey">
+						
+					</p>
+					<footer>
+						<button string="Set to Draft BC" name="beacukai_set_draft" type="object" default_focus="1" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_beacukai_set_draft"
+			multi="True"
+			key2="client_action_multi" name="Set to Draft BC"
+			res_model="beacukai.draft" src_model="beacukai.document"
+			view_mode="form" target="new" view_type="form" />
+
+	</data>
+</openerp>

@@ -1,0 +1,10 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_master_data_custom_1","product.blend.component mastercreator","master_data_custom.model_product_rm_category","master_data_creation",1,0,1,0
+"access_master_data_custom_2","product.blend.component mastercreator","master_data_custom.model_product_blend_component","master_data_creation",1,0,1,0
+"access_master_data_custom_3","product.blend mastercreator","master_data_custom.model_product_blend","master_data_creation",1,0,1,0
+"access_master_data_custom_4","product.blend.component mastermodifier","master_data_custom.model_product_rm_category","master_data_modification",1,1,1,0
+"access_master_data_custom_5","product.blend.component mastermodifier","master_data_custom.model_product_blend_component","master_data_modification",1,1,1,0
+"access_master_data_custom_6","product.blend mastermodifier","master_data_custom.model_product_blend","master_data_modification",1,1,1,0
+"access_master_data_custom_7","product.blend.component masterdeletor","master_data_custom.model_product_rm_category","master_data_deletion",1,1,1,1
+"access_master_data_custom_8","product.blend.component masterdeletor","master_data_custom.model_product_blend_component","master_data_deletion",1,1,1,1
+"access_master_data_custom_9","product.blend masterdeletor","master_data_custom.model_product_blend","master_data_deletion",1,1,1,1

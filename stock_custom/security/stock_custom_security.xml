@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+    <record id="beacukai.group_bc_warehouse_user" model="res.groups">
+        <field name="name">BC Warehouse User</field>
+        <field name="category_id" ref="base.module_category_warehouse_management"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="menu_access" eval="[
+            (4, ref('beacukai.incoming_beacukai')),
+            (4, ref('beacukai.outgoing_beacukai')),
+            (4, ref('beacukai.beacukai_reports')),
+            (4, ref('stock_custom.stock_production')),
+            (4, ref('beacukai.beacukai_configuration'))]"/>
+    </record>
+
+    <record id="group_bc_production_user" model="res.groups">
+        <field name="name">Production User</field>
+        <field name="category_id" ref="base.module_category_warehouse_management"/>
+        <!-- <field name="implied_ids" eval="[(4, ref('group_bc_warehouse_user'))]"/> -->
+    </record>
+
+    <record id="group_bc_production_manager" model="res.groups">
+        <field name="name">Producion Manager</field>
+        <field name="category_id" ref="base.module_category_warehouse_management"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_bc_production_user'))]"/>
+    </record>
+</data>
+</openerp>

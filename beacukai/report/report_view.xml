@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report auto="False" id="report_beacukai_in" model="beacukai.document.line.in" name="beacukai.in.form.xls" string="Laporan Pemasukan Barang" usage="default" report_type="xls" menu="True" header="False" />
+		<report auto="False" id="report_beacukai_out" model="beacukai.document.line.out" name="beacukai.out.form.xls" string="Laporan Pengeluaran Barang" usage="default" report_type="xls" menu="True" header="False" />
+	</data>
+</openerp>

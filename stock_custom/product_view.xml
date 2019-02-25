@@ -1,0 +1,84 @@
+<openerp>
+	<data>
+		<record id="view_product_blend_form_inherit_stock" model="ir.ui.view">
+			<field name="name">product.blend.form.inherit.stock</field>
+			<field name="model">product.blend</field>
+			<field name="inherit_id" ref="master_data_custom.view_product_blend_form" />
+			<field name="arch" type="xml">
+				<field name="product_uom" position="after" >
+					<field name="ratio_produced_qty" />
+				</field>
+			</field>
+		</record>
+
+		<record id="view_product_blend_tree2_mutation" model="ir.ui.view">
+			<field name="name">product.blend.tree2.mutation</field>
+			<field name="model">product.blend</field>
+			<field name="arch" type="xml">
+				<tree string="Blend Code">
+					<field name="code"/>
+					<field name="name"/>
+					<field name="product_uom"/>
+					<field name="opening_qty" string="Saldo Awal"/>
+					<field name="in_qty" string="Pemasukan"/>
+					<field name="out_qty" string="Pengeluaran"/>
+					<field name="adj_qty" string="Penyesuaian"/>
+					<field name="all_qty" string="Saldo Buku"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_product_rm_category_tree2_mutation" model="ir.ui.view">
+			<field name="name">product.rm.category.tree2.mutation</field>
+			<field name="model">product.rm.category</field>
+			<field name="arch" type="xml">
+				<tree string="Raw Material Category">
+					<field name="name"/>
+					<field name="code"/>
+					<field name="product_uom"/>
+					<field name="opening_qty" string="Saldo Awal"/>
+					<field name="in_qty" string="Pemasukan"/>
+					<field name="out_qty" string="Pengeluaran"/>
+					<field name="adj_qty" string="Penyesuaian"/>
+					<field name="all_qty" string="Saldo Buku"/>
+				</tree>
+			</field>
+		</record>
+
+		<!-- <record id="view_product_wip_blend_tree2_mutation" model="ir.ui.view">
+			<field name="name">product.wip.blend.tree2.mutation</field>
+			<field name="model">product.blend</field>
+			<field name="arch" type="xml">
+				<tree string="Blend Code">
+					<field name="code"/>
+					<field name="name"/>
+					<field name="product_uom"/>
+					<field name="prod_opening_qty" />
+					<field name="prod_in_qty" />
+					<field name="prod_out_qty" />
+					<field name="prod_waste_qty" />
+					<field name="prod_adj_qty" />
+					<field name="prod_all_qty" />
+				</tree>
+			</field>
+		</record> -->
+
+		<record id="view_product_wip_rm_category_tree2_mutation" model="ir.ui.view">
+			<field name="name">product.wip.rm.category.tree2.mutation</field>
+			<field name="model">product.rm.category</field>
+			<field name="arch" type="xml">
+				<tree string="Raw Material Category">
+					<field name="name"/>
+					<field name="code"/>
+					<field name="product_uom"/>
+					<field name="prod_opening_qty" />
+					<field name="prod_in_qty" />
+					<field name="prod_out_qty" />
+					<field name="prod_waste_qty" />
+					<field name="prod_adj_qty" />
+					<field name="prod_all_qty" />
+				</tree>
+			</field>
+		</record>
+	</data>
+</openerp>

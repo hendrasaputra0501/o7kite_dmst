@@ -1,0 +1,55 @@
+<openerp>
+	<data>
+		<record id="view_wizard_product_outgoing" model="ir.ui.view">
+			<field name="name">Laporan Pengeluaran Barang</field>
+			<field name="model">wizard.product.outgoing</field>
+			<field name="arch" type="xml">
+			   <form string="Laporan Pengeluaran Barang" version="7.0">
+					<group>
+						<group>
+							<field name="product_type" required="1" readonly="1"/>
+							<field name="shipment_type" invisible="1"/>
+						</group>
+						<group>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="from_date" required="1"/>
+						</group>
+						<group>
+							<field name="to_date" required="1"/>
+						</group>
+					</group>
+					<footer>
+						<button name="action_open_window" string="View Incoming Products" type="object" class="oe_highlight"/>
+						or
+						<button name="export_excel" string="Export to Excel" type="object" />
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_wizard_product_outgoing" model="ir.actions.act_window">
+			<field name="name">Lap. Pengeluaran Barang</field>
+			<field name="res_model">wizard.product.outgoing</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="context">{'product_type':'finish_good','shipment_type':'out'}</field>
+			<field name="view_id" ref="view_wizard_product_outgoing"/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="action_wizard_product_outgoing_waste" model="ir.actions.act_window">
+			<field name="name">Lap. Penyelesaian Waste/Scrap</field>
+			<field name="res_model">wizard.product.outgoing</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="context">{'product_type':'waste','shipment_type':'out'}</field>
+			<field name="view_id" ref="view_wizard_product_outgoing"/>
+			<field name="target">new</field>
+		</record>
+	</data>
+</openerp>
